@@ -5,16 +5,34 @@
 //! so `/healthz`, `/livez`, `/readyz`, and `/metrics` are not duplicated per surface.
 
 use axum::Router;
-use sdkwork_portal_service_host::PortalServiceHost;
 use std::sync::Arc;
+use sdkwork_web_bootstrap::{
+    ApiAssemblyContribution, DomainContextInjector, HttpRouteManifest, ReadinessCheck,
+};
+use sdkwork_portal_service_host::PortalServiceHost;
 
-pub struct ApiAssembly {
-    pub router: Router,
+pub type ApiAssembly = ApiAssemblyContribution;
+
+pub struct ApiAssemblyContext {
+    pub host: Arc<PortalServiceHost>,
+    pub domain_context_injectors: Vec<Arc<dyn DomainContextInjector>>,
+    pub readiness_check: Arc<dyn ReadinessCheck>,
 }
 
-pub async fn assemble_api_router(host: Arc<PortalServiceHost>) -> ApiAssembly {
+pub async fn assemble_api_router(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
+    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
     let mut router = Router::new();
     router = router.merge(sdkwork_routes_portal_app_api::gateway_mount(host.clone()).await);
     router = router.merge(sdkwork_routes_portal_backend_api::gateway_mount(host.clone()).await);
-    ApiAssembly { router }
+    let mut routes = Vec::new();
+    routes.extend_from_slice(sdkwork_routes_portal_app_api::gateway_route_manifest().routes());
+    routes.extend_from_slice(sdkwork_routes_portal_backend_api::gateway_route_manifest().routes());
+    ApiAssemblyContribution::from_manifest(
+        "sdkwork-portal",
+        "SDKWork portal API",
+        router,
+        HttpRouteManifest::from_owned_routes(routes),
+        domain_context_injectors,
+        readiness_check,
+    )
 }

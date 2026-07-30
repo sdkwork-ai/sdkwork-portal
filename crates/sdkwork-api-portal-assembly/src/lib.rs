@@ -1,14 +1,16 @@
-//! API assembly for sdkwork-portal.
-//! Application bootstrap lives in `bootstrap.rs`; route inventory is in `assembly-manifest.json`.
+//! Generated API assembly for sdkwork-portal.
 
-mod bootstrap;
 mod generated;
 
-pub use bootstrap::{assemble_api_router, ApiAssembly};
+pub struct ApiAssembly {
+    pub router: axum::Router,
+}
 
-pub async fn assemble_api_router_from_env() -> Result<ApiAssembly, String> {
-    let host = sdkwork_portal_service_host::PortalServiceHost::from_env().await?;
-    Ok(assemble_api_router(std::sync::Arc::new(host)).await)
+pub async fn assemble_api_router() -> ApiAssembly {
+    let mut router = axum::Router::new();
+    router = router.merge(sdkwork_routes_portal_app_api::gateway_mount());
+    router = router.merge(sdkwork_routes_portal_backend_api::gateway_mount());
+    ApiAssembly { router }
 }
 
 pub fn assembly_route_count() -> usize {
