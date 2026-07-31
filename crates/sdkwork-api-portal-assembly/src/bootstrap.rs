@@ -6,9 +6,8 @@
 
 use axum::Router;
 use std::sync::Arc;
-use sdkwork_web_bootstrap::{
-    ApiAssemblyContribution, DomainContextInjector, HttpRouteManifest, ReadinessCheck,
-};
+use sdkwork_web_bootstrap::{ApiAssemblyContribution, ReadinessCheck};
+use sdkwork_web_core::{DomainContextInjector, HttpRouteManifest};
 use sdkwork_portal_service_host::PortalServiceHost;
 
 pub type ApiAssembly = ApiAssemblyContribution;
@@ -36,3 +35,36 @@ pub async fn assemble_api_router(context: ApiAssemblyContext) -> Result<ApiAssem
         readiness_check,
     )
 }
+
+pub async fn assemble_app_api_contribution(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
+    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
+    let mut router = Router::new();
+    router = router.merge(sdkwork_routes_portal_app_api::gateway_mount(host.clone()).await);
+    let mut routes = Vec::new();
+    routes.extend_from_slice(sdkwork_routes_portal_app_api::gateway_route_manifest().routes());
+    ApiAssemblyContribution::from_manifest(
+        "sdkwork-portal",
+        "SDKWork portal App API",
+        router,
+        HttpRouteManifest::from_owned_routes(routes),
+        domain_context_injectors,
+        readiness_check,
+    )
+}
+
+pub async fn assemble_backend_api_contribution(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
+    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
+    let mut router = Router::new();
+    router = router.merge(sdkwork_routes_portal_backend_api::gateway_mount(host.clone()).await);
+    let mut routes = Vec::new();
+    routes.extend_from_slice(sdkwork_routes_portal_backend_api::gateway_route_manifest().routes());
+    ApiAssemblyContribution::from_manifest(
+        "sdkwork-portal",
+        "SDKWork portal Backend API",
+        router,
+        HttpRouteManifest::from_owned_routes(routes),
+        domain_context_injectors,
+        readiness_check,
+    )
+}
+
