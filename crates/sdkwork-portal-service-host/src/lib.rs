@@ -24,6 +24,17 @@ impl PortalServiceHost {
         })
     }
 
+    /// Build the portal service host against a caller-provided database pool so
+    /// the platform cloud gateway can share its process-wide PostgreSQL pool.
+    pub async fn from_pool(pool: DatabasePool) -> Result<Self, String> {
+        let database = sdkwork_portal_database_host::bootstrap_portal_database(pool).await?;
+        let repository = SqlxPortalRepository::new(database.pool().clone());
+        Ok(Self {
+            portal_service: PortalService::new(repository),
+            database,
+        })
+    }
+
     pub fn portal_service(&self) -> &PortalService<SqlxPortalRepository> {
         &self.portal_service
     }
