@@ -27,10 +27,7 @@ async fn main() {
         .router
         .layer(sdkwork_web_bootstrap::application_cors_layer_from_env(
             &["SDKWORK_PORTAL_ENVIRONMENT"],
-            &[
-                "SDKWORK_PORTAL_CORS_ALLOWED_ORIGINS",
-                "SDKWORK_CORS_ALLOWED_ORIGINS",
-            ],
+            &["SDKWORK_CORS_ALLOWED_ORIGINS"],
         ));
 
     let addr = std::env::var("PORTAL_API_BIND").unwrap_or_else(|_| "0.0.0.0:18091".to_owned());
