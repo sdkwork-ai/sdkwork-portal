@@ -19,6 +19,8 @@ license = "AGPL-3.0-or-later"
 publish = false
 
 [workspace.dependencies]
+sdkwork_api_portal_assembly = { path = "crates/sdkwork-api-portal-assembly", package = "sdkwork-api-portal-assembly" }
+
 axum = "0.8"
 tokio = { version = "1.51", features = ["macros", "rt-multi-thread", "net", "sync"] }
 serde = { version = "1", features = ["derive"] }
