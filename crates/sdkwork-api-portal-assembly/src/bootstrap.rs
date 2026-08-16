@@ -5,11 +5,11 @@
 //! so `/healthz`, `/livez`, `/readyz`, and `/metrics` are not duplicated per surface.
 
 use axum::Router;
-use std::sync::Arc;
-use sdkwork_web_bootstrap::{ApiAssemblyContribution, ReadinessCheck};
-use sdkwork_web_core::{DomainContextInjector, HttpRouteManifest};
 use sdkwork_database_sqlx::DatabasePool;
 use sdkwork_portal_service_host::PortalServiceHost;
+use sdkwork_web_bootstrap::{ApiAssemblyContribution, ReadinessCheck};
+use sdkwork_web_core::{DomainContextInjector, HttpRouteManifest};
+use std::sync::Arc;
 
 pub type ApiAssembly = ApiAssemblyContribution;
 
@@ -19,14 +19,26 @@ pub struct ApiAssemblyContext {
     pub readiness_check: Arc<dyn ReadinessCheck>,
 }
 
+pub async fn assemble_api_router_from_env() -> Result<ApiAssembly, String> {
+    let host = Arc::new(PortalServiceHost::from_env().await?);
+    let readiness_check: Arc<dyn ReadinessCheck> = Arc::new(
+        sdkwork_web_bootstrap::DatabasePoolReadinessCheck::new(host.database_pool().clone()),
+    );
+    assemble_api_router(ApiAssemblyContext {
+        host,
+        domain_context_injectors: Vec::new(),
+        readiness_check,
+    })
+    .await
+}
+
 /// Assemble the full portal router against a caller-provided database pool so
 /// the platform cloud gateway can share its process-wide PostgreSQL pool.
 pub async fn assemble_api_router_with_pool(pool: DatabasePool) -> Result<ApiAssembly, String> {
     let host = Arc::new(PortalServiceHost::from_pool(pool).await?);
-    let readiness_check: Arc<dyn ReadinessCheck> =
-        Arc::new(sdkwork_web_bootstrap::DatabasePoolReadinessCheck::new(
-            host.database_pool().clone(),
-        ));
+    let readiness_check: Arc<dyn ReadinessCheck> = Arc::new(
+        sdkwork_web_bootstrap::DatabasePoolReadinessCheck::new(host.database_pool().clone()),
+    );
     assemble_api_router(ApiAssemblyContext {
         host,
         domain_context_injectors: Vec::new(),
@@ -36,7 +48,11 @@ pub async fn assemble_api_router_with_pool(pool: DatabasePool) -> Result<ApiAsse
 }
 
 pub async fn assemble_api_router(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
-    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
+    let ApiAssemblyContext {
+        host,
+        domain_context_injectors,
+        readiness_check,
+    } = context;
     let mut router = Router::new();
     router = router.merge(sdkwork_routes_portal_app_api::gateway_mount(host.clone()).await);
     router = router.merge(sdkwork_routes_portal_backend_api::gateway_mount(host.clone()).await);
@@ -53,8 +69,14 @@ pub async fn assemble_api_router(context: ApiAssemblyContext) -> Result<ApiAssem
     )
 }
 
-pub async fn assemble_app_api_contribution(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
-    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
+pub async fn assemble_app_api_contribution(
+    context: ApiAssemblyContext,
+) -> Result<ApiAssembly, String> {
+    let ApiAssemblyContext {
+        host,
+        domain_context_injectors,
+        readiness_check,
+    } = context;
     let mut router = Router::new();
     router = router.merge(sdkwork_routes_portal_app_api::gateway_mount(host.clone()).await);
     let mut routes = Vec::new();
@@ -69,8 +91,14 @@ pub async fn assemble_app_api_contribution(context: ApiAssemblyContext) -> Resul
     )
 }
 
-pub async fn assemble_backend_api_contribution(context: ApiAssemblyContext) -> Result<ApiAssembly, String> {
-    let ApiAssemblyContext { host, domain_context_injectors, readiness_check } = context;
+pub async fn assemble_backend_api_contribution(
+    context: ApiAssemblyContext,
+) -> Result<ApiAssembly, String> {
+    let ApiAssemblyContext {
+        host,
+        domain_context_injectors,
+        readiness_check,
+    } = context;
     let mut router = Router::new();
     router = router.merge(sdkwork_routes_portal_backend_api::gateway_mount(host.clone()).await);
     let mut routes = Vec::new();
@@ -84,4 +112,3 @@ pub async fn assemble_backend_api_contribution(context: ApiAssemblyContext) -> R
         readiness_check,
     )
 }
-

@@ -1701,7 +1701,6 @@ dependencies = [
  "axum",
  "sdkwork-api-portal-assembly",
  "sdkwork-iam-web-adapter",
- "sdkwork-portal-service-host",
  "sdkwork-web-bootstrap",
  "serde_json",
  "tokio",

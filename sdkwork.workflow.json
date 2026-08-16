@@ -56,6 +56,30 @@
       "ref": "main",
       "refInput": "SDKWORK_APP_TOPOLOGY_REF",
       "tokenSecret": "SDKWORK_RELEASE_TOKEN"
+    },
+    {
+      "id": "sdkwork-core",
+      "repository": "sdkwork-ai/sdkwork-core",
+      "refInput": "SDKWORK_CORE_REF",
+      "tokenSecret": "SDKWORK_RELEASE_TOKEN"
+    },
+    {
+      "id": "sdkwork-iam",
+      "repository": "sdkwork-ai/sdkwork-iam",
+      "refInput": "SDKWORK_IAM_REF",
+      "tokenSecret": "SDKWORK_RELEASE_TOKEN"
+    },
+    {
+      "id": "sdkwork-sdk-commons",
+      "repository": "sdkwork-ai/sdkwork-sdk-commons",
+      "refInput": "SDKWORK_SDK_COMMONS_REF",
+      "tokenSecret": "SDKWORK_RELEASE_TOKEN"
+    },
+    {
+      "id": "sdkwork-ui",
+      "repository": "sdkwork-ai/sdkwork-ui",
+      "refInput": "SDKWORK_UI_REF",
+      "tokenSecret": "SDKWORK_RELEASE_TOKEN"
     }
   ],
   "toolchains": {
@@ -99,9 +123,13 @@
       "profile": "server",
       "platform": "linux",
       "architecture": "x64",
-      "formats": ["tar.gz"],
+      "formats": [
+        "tar.gz"
+      ],
       "runner": "ubuntu-24.04",
-      "outputGlobs": ["artifacts/release/**/*"],
+      "outputGlobs": [
+        "artifacts/release/**/*"
+      ],
       "deploymentProfile": "standalone",
       "runtimeTarget": "server"
     },
@@ -110,9 +138,13 @@
       "profile": "container",
       "platform": "container",
       "architecture": "noarch",
-      "formats": ["tar.gz"],
+      "formats": [
+        "tar.gz"
+      ],
       "runner": "ubuntu-24.04",
-      "outputGlobs": ["dist/cloud-config/sdkwork-portal-api-gateway-config-*.tar.gz"],
+      "outputGlobs": [
+        "dist/cloud-config/sdkwork-portal-api-gateway-config-*.tar.gz"
+      ],
       "deploymentProfile": "cloud",
       "runtimeTarget": "container",
       "variant": "config-bundle"

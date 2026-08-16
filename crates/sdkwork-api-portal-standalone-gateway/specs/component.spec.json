@@ -20,7 +20,7 @@
     "layerRole": "runtime-gateway",
     "publicExports": [],
     "requiredPorts": [
-      { "name": "applicationApiAssembly", "export": "sdkwork-api-portal-assembly" }
+      { "name": "applicationApiAssembly", "export": "sdkwork_api_portal_assembly::assemble_api_router_from_env" }
     ],
     "runtimeEntrypoints": ["src/main.rs"],
     "sdkDependencies": [],

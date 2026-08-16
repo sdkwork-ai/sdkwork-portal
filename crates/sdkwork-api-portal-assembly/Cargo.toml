@@ -15,6 +15,6 @@ axum.workspace = true
 tokio.workspace = true
 sdkwork-web-bootstrap.workspace = true
 sdkwork-web-core.workspace = true
-sdkwork_portal_service_host = { workspace = true, package = "sdkwork-portal-service-host" }
+sdkwork_portal_service_host.workspace = true
 sdkwork_routes_portal_app_api.workspace = true
 sdkwork_routes_portal_backend_api.workspace = true

@@ -1,18 +1,15 @@
-use sdkwork_api_portal_assembly::assemble_api_router;
+use sdkwork_api_portal_assembly::assemble_api_router_from_env;
 use sdkwork_iam_web_adapter::{
     build_web_framework_builder, iam_web_request_context_resolver_from_env,
 };
-use sdkwork_portal_service_host::PortalServiceHost;
 use sdkwork_web_bootstrap::{infra_public_path_prefixes, ComposedApiAssembly};
-use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
     tracing::info!("Starting SDKWork Portal API Server...");
 
-    let host = Arc::new(PortalServiceHost::new().await);
-    let assembly = assemble_api_router(host)
+    let assembly = assemble_api_router_from_env()
         .await
         .expect("portal API assembly failed");
     let framework = build_web_framework_builder(
