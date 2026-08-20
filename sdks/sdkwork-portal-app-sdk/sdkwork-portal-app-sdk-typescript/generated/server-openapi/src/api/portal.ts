@@ -1,5 +1,5 @@
 import { appApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { PortalPreferencesUpdateRequest } from '../types';
 
@@ -13,22 +13,20 @@ export class PortalPreferencesApi {
 
 
 /** Retrieve current user portal preferences */
-  async retrieve(): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(appApiPath(`/portal/preferences`));
+  async retrieve(requestOptions?: ApiRequestOptions): Promise<{ pinnedAppKeys: string[]; theme: string; }> {
+    return this.client.request<{ pinnedAppKeys: string[]; theme: string; }>(appApiPath(`/portal/preferences`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 
 /** Update current user portal preferences */
-  async update(body: PortalPreferencesUpdateRequest): Promise<Record<string, unknown>> {
-    return this.client.put<Record<string, unknown>>(appApiPath(`/portal/preferences`), body, undefined, undefined, 'application/json');
+  async update(body: PortalPreferencesUpdateRequest, requestOptions?: ApiRequestOptions): Promise<Record<string, unknown>> {
+    return this.client.request<Record<string, unknown>>(appApiPath(`/portal/preferences`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PUT' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 }
 
 export class PortalApi {
-  private client: HttpClient;
   public readonly preferences: PortalPreferencesApi;
 
   constructor(client: HttpClient) {
-    this.client = client;
     this.preferences = new PortalPreferencesApi(client);
   }
 
@@ -36,12 +34,4 @@ export class PortalApi {
 
 export function createPortalApi(client: HttpClient): PortalApi {
   return new PortalApi(client);
-}
-
-function appendQueryString(path: string, rawQueryString: string): string {
-  const query = rawQueryString.replace(/^\?+/, '');
-  if (!query) {
-    return path;
-  }
-  return path.includes('?') ? `${path}&${query}` : `${path}?${query}`;
 }
