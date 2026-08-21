@@ -72,10 +72,10 @@
   },
   "environments": {
     "development": {
-      "runtimeProfile": "standalone.unified-process.development"
+      "runtimeProfile": "standalone.development"
     },
     "production": {
-      "runtimeProfile": "cloud.split-services.production"
+      "runtimeProfile": "cloud.production"
     }
   },
   "artifacts": {

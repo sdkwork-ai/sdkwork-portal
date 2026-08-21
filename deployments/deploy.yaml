@@ -1,8 +1,75 @@
-version: 1
-defaultProfile: cloud.split-services.production
+version: 2
+defaultProfile: cloud.production
 
 profiles:
-  cloud.split-services.production:
+  cloud.test:
+    deployment:
+      deploymentProfile: cloud
+      environment: test
+      deliveryKind: container-image
+      deploymentDriver: kubernetes
+      managementModel: sdkwork-managed
+      tenancyModel: single-tenant
+      isolationModel: dedicated
+      networkExposure: public
+      rolloutStrategy: rolling
+      availabilityMode: high-availability
+    install:
+      layout: binary-package
+    expose:
+      - domain: portal-test.sdkwork.com
+        tls: sdkwork.com
+        mode: web+api
+        web: adaptive
+    packages: []
+    overrides:
+      topology:
+        spec: specs/topology.spec.json
+        profile: cloud.test
+        env: etc/topology/cloud.test.env
+      kubernetes:
+        reference: deployments/kubernetes/
+
+  cloud.staging:
+    deployment:
+      deploymentProfile: cloud
+      environment: staging
+      deliveryKind: container-image
+      deploymentDriver: kubernetes
+      managementModel: sdkwork-managed
+      tenancyModel: single-tenant
+      isolationModel: dedicated
+      networkExposure: public
+      rolloutStrategy: rolling
+      availabilityMode: high-availability
+    install:
+      layout: binary-package
+    expose:
+      - domain: portal-staging.sdkwork.com
+        tls: sdkwork.com
+        mode: web+api
+        web: adaptive
+    packages: []
+    overrides:
+      topology:
+        spec: specs/topology.spec.json
+        profile: cloud.staging
+        env: etc/topology/cloud.staging.env
+      kubernetes:
+        reference: deployments/kubernetes/
+
+  cloud.production:
+    deployment:
+      deploymentProfile: cloud
+      environment: production
+      deliveryKind: container-image
+      deploymentDriver: kubernetes
+      managementModel: sdkwork-managed
+      tenancyModel: single-tenant
+      isolationModel: dedicated
+      networkExposure: public
+      rolloutStrategy: rolling
+      availabilityMode: high-availability
     install:
       layout: binary-package
     expose:
@@ -11,11 +78,43 @@ profiles:
         mode: web+api
         web: adaptive
     packages: []
+    overrides:
+      topology:
+        spec: specs/topology.spec.json
+        profile: cloud.production
+        env: etc/topology/cloud.production.env
+      kubernetes:
+        reference: deployments/kubernetes/
 
-  standalone.unified-process.development:
+  standalone.production:
+    deployment:
+      deploymentProfile: standalone
+      environment: production
+      deliveryKind: host-package
+      deploymentDriver: nginx
+      managementModel: customer-managed
+      tenancyModel: single-tenant
+      isolationModel: dedicated
+      networkExposure: private
+      rolloutStrategy: recreate
+      availabilityMode: single-instance
+    install:
+      layout: binary-package
     expose:
-      - domain: localhost
-        tls: off
+      - domain: portal.internal.example
+        tls: managed
         mode: web+api
         web: adaptive
+        apiPathStyle: full-prefix
     packages: []
+    overrides:
+      topology:
+        spec: specs/topology.spec.json
+        profile: standalone.production
+        env: etc/topology/standalone.production.env
+      proxy:
+        upstreams:
+          application.public-ingress: http://127.0.0.1:18091
+          platform.api-gateway: http://127.0.0.1:3900
+      nginx:
+        clientMaxBodySize: 32m

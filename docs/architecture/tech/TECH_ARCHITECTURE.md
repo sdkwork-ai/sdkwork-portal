@@ -41,7 +41,7 @@ Specs: `sdkwork-specs/APP_PC_ARCHITECTURE_SPEC.md`, `WEB_FRAMEWORK_SPEC.md`, `DA
 
 - Topology authority: `specs/topology.spec.json` (`appId: sdkwork-portal`)
 - Deploy authority: `deployments/deploy.yaml`
-- Profiles: standalone unified-process (dev) and cloud split-services (prod)
+- Profiles: standalone development and cloud production (topology v5)
 - Gateway configs: `configs/sdkwork-api-cloud-gateway.portal.{profile}.toml`
 
 ## 6. Verification
