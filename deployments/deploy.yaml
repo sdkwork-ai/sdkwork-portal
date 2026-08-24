@@ -40,6 +40,38 @@ profiles:
         tls: dtupay.cn
         mode: web+api
         web: adaptive
+      - domain: portal-test.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-test.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
     packages: []
     overrides:
       topology:
@@ -87,6 +119,38 @@ profiles:
         tls: dtupay.cn
         mode: web+api
         web: adaptive
+      - domain: portal-staging.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+      - domain: portal-staging.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
     packages: []
     overrides:
       topology:
@@ -132,6 +196,38 @@ profiles:
         web: adaptive
       - domain: portal.dtupay.cn
         tls: dtupay.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+      - domain: portal.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+      - domain: portal.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+      - domain: portal.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+      - domain: portal.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+      - domain: portal.86offer.cn
+        tls: 86offer.cn
         mode: web+api
         web: adaptive
     packages: []
@@ -184,6 +280,46 @@ profiles:
         apiPathStyle: full-prefix
       - domain: portal.dtupay.cn
         tls: dtupay.cn
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+        apiPathStyle: full-prefix
+      - domain: portal.86offer.cn
+        tls: 86offer.cn
         mode: web+api
         web: adaptive
         apiPathStyle: full-prefix
