@@ -28,5 +28,15 @@
       "version": "0.1.0"
     }
   ],
-  "sdkDependencies": []
+  "sdkDependencies": [],
+  "sdkFamily": "sdkwork-portal-backend-sdk",
+  "sdkName": "sdkwork-portal-backend-sdk",
+  "packageName": "@sdkwork/portal-backend-sdk",
+  "transportPackageName": "sdkwork-portal-backend-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-portal-backend-sdk-typescript",
+    "composedEntry": "sdkwork-portal-backend-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-portal-backend-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-portal-backend-sdk-typescript/generated/server-openapi/src/index.ts"
+  }
 }
