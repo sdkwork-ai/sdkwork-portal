@@ -33,9 +33,17 @@
   "runtime": {
     "family": "web",
     "framework": "react",
-    "runtimes": ["WEB", "BROWSER"],
-    "deliveryModes": ["WEB_URL"],
-    "supportedDeploymentProfiles": ["standalone", "cloud"],
+    "runtimes": [
+      "WEB",
+      "BROWSER"
+    ],
+    "deliveryModes": [
+      "WEB_URL"
+    ],
+    "supportedDeploymentProfiles": [
+      "standalone",
+      "cloud"
+    ],
     "defaultDeploymentProfile": "cloud"
   },
   "media": {
@@ -63,19 +71,16 @@
   },
   "publish": {
     "status": "ACTIVE",
-    "platforms": ["WEB", "BROWSER"],
-    "installPlatforms": ["WEB"],
+    "platforms": [
+      "WEB",
+      "BROWSER"
+    ],
+    "installPlatforms": [
+      "WEB"
+    ],
     "config": {
       "workspaceRoot": "sdkwork-portal",
       "managedBy": "sdkwork-portal-workspace"
-    }
-  },
-  "environments": {
-    "development": {
-      "runtimeProfile": "standalone.development"
-    },
-    "production": {
-      "runtimeProfile": "cloud.production"
     }
   },
   "artifacts": {
