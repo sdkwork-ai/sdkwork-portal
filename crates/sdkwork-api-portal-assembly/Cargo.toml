@@ -10,11 +10,11 @@ name = "sdkwork_api_portal_assembly"
 path = "src/lib.rs"
 
 [dependencies]
-sdkwork-database-sqlx.workspace = true
 axum.workspace = true
 tokio.workspace = true
 sdkwork-web-bootstrap.workspace = true
 sdkwork-web-core.workspace = true
+sdkwork-database-sqlx.workspace = true
 sdkwork_portal_service_host.workspace = true
-sdkwork_routes_portal_app_api.workspace = true
-sdkwork_routes_portal_backend_api.workspace = true
+sdkwork_routes_portal_app_api = { workspace = true }
+sdkwork_routes_portal_backend_api = { workspace = true }

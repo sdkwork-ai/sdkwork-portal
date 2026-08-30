@@ -23,7 +23,7 @@
   "paths": {
     "/backend/v3/api/portal/preferences": {
       "get": {
-        "operationId": "portal.preferences.admin.list",
+        "operationId": "preferences.admin.list",
         "summary": "List portal preferences for tenant administration",
         "tags": [
           "portal"
@@ -115,7 +115,8 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     }
   },

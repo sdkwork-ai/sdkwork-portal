@@ -23,7 +23,7 @@
   "paths": {
     "/app/v3/api/portal/preferences": {
       "get": {
-        "operationId": "portal.preferences.retrieve",
+        "operationId": "preferences.retrieve",
         "summary": "Retrieve current user portal preferences",
         "tags": [
           "portal"
@@ -105,10 +105,11 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       },
       "put": {
-        "operationId": "portal.preferences.update",
+        "operationId": "preferences.update",
         "summary": "Update current user portal preferences",
         "tags": [
           "portal"
@@ -187,7 +188,8 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     }
   },

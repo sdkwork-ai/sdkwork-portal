@@ -19,11 +19,6 @@
         "workspace": "sdkwork-portal-app-sdk",
         "surface": "app-api",
         "credentialMode": "authenticated-app-api"
-      },
-      {
-        "workspace": "sdkwork-sdkwork-portal-app-sdk",
-        "surface": "app-api",
-        "credentialMode": "authenticated-app-api"
       }
     ],
     "dependencyApiExports": [],
@@ -31,12 +26,12 @@
     "permissionComposition": {
       "inheritanceMode": "module-catalog-with-overrides",
       "applicationModule": {
-        "manifestRef": "../../../../../specs/iam.module.manifest.json"
+        "manifestRef": "../../../../specs/iam.module.manifest.json"
       },
       "moduleCatalogRefs": [
         {
           "moduleId": "portal",
-          "manifestRef": "../../../../../specs/iam.module.manifest.json",
+          "manifestRef": "../../../../specs/iam.module.manifest.json",
           "inheritPermissions": true,
           "inheritRoles": true
         }
