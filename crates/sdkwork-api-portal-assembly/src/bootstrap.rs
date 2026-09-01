@@ -6,11 +6,34 @@
 
 use axum::Router;
 use std::sync::Arc;
-use sdkwork_web_bootstrap::{ApiAssemblyContribution, ReadinessCheck};
+use sdkwork_database_sqlx::DatabasePool;
+use sdkwork_web_bootstrap::{ApiAssemblyContribution, PgPoolReadinessCheck, ReadinessCheck};
 use sdkwork_web_core::{DomainContextInjector, HttpRouteManifest};
 use sdkwork_portal_service_host::PortalServiceHost;
 
 pub type ApiAssembly = ApiAssemblyContribution;
+
+/// Assemble the portal application router against a caller-provided database
+/// pool so the platform cloud gateway can share its process-wide PostgreSQL
+/// pool (single shared-pool process contract).
+pub async fn assemble_api_router_with_pool(pool: DatabasePool) -> Result<ApiAssembly, String> {
+    let host = Arc::new(
+        PortalServiceHost::from_pool(pool)
+            .await
+            .map_err(|error| format!("Portal service host bootstrap failed: {error}"))?,
+    );
+    let readiness_pool = host
+        .database_pool()
+        .as_postgres()
+        .ok_or_else(|| "Portal requires a PostgreSQL database profile".to_owned())?
+        .clone();
+    assemble_api_router(ApiAssemblyContext {
+        host,
+        domain_context_injectors: Vec::new(),
+        readiness_check: Arc::new(PgPoolReadinessCheck::new(readiness_pool)),
+    })
+    .await
+}
 
 pub struct ApiAssemblyContext {
     pub host: Arc<PortalServiceHost>,
