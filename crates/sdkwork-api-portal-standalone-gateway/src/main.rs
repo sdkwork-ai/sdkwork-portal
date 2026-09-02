@@ -1,23 +1,31 @@
-use sdkwork_api_portal_assembly::assemble_api_router_from_env;
+use sdkwork_api_portal_assembly::web_module;
 use sdkwork_iam_web_adapter::{
     build_web_framework_builder, iam_web_request_context_resolver_from_env,
 };
-use sdkwork_web_bootstrap::{infra_public_path_prefixes, ComposedApiAssembly};
+use sdkwork_web_bootstrap::{infra_public_path_prefixes, ApiModuleRegistry};
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
     tracing::info!("Starting SDKWork Portal API Server...");
 
-    let assembly = assemble_api_router_from_env()
-        .await
-        .expect("portal API assembly failed");
+    // The module owns the complete portal HTTP surface (API_ASSEMBLY_SPEC
+    // §4.1.1); the host only installs it and publishes the composed router.
+    let module = web_module().await.expect("portal API assembly failed");
+    let manifest = module
+        .contributions()
+        .first()
+        .map(|contribution| contribution.route_manifest.clone())
+        .expect("portal web module exposes at least one surface contribution");
     let framework = build_web_framework_builder(
         iam_web_request_context_resolver_from_env().await,
-        assembly.route_manifest.clone(),
+        manifest,
         infra_public_path_prefixes(),
     );
-    let hosted = ComposedApiAssembly::try_compose("SDKWork Portal API", vec![assembly])
+    let mut module_registry = ApiModuleRegistry::new();
+    module_registry.add_module(module);
+    let hosted = module_registry
+        .try_compose("SDKWork Portal API")
         .expect("portal API composition failed")
         .into_hosted(framework);
     let app = hosted

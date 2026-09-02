@@ -7,7 +7,7 @@
 use axum::Router;
 use std::sync::Arc;
 use sdkwork_database_sqlx::DatabasePool;
-use sdkwork_web_bootstrap::{ApiAssemblyContribution, PgPoolReadinessCheck, ReadinessCheck};
+use sdkwork_web_bootstrap::{ApiAssemblyContribution, PgPoolReadinessCheck, ReadinessCheck, WebModule};
 use sdkwork_web_core::{DomainContextInjector, HttpRouteManifest};
 use sdkwork_portal_service_host::PortalServiceHost;
 
@@ -91,3 +91,43 @@ pub async fn assemble_backend_api_contribution(context: ApiAssemblyContext) -> R
     )
 }
 
+
+/// Installs this application as a Web Module with caller-supplied assembly
+/// context (API_ASSEMBLY_SPEC §4.1.1).
+pub async fn web_module_with_context(
+    context: ApiAssemblyContext,
+) -> Result<WebModule, String> {
+    Ok(WebModule::from_contribution(assemble_api_router(context).await?))
+}
+
+/// Canonical Web Module definition for this application
+/// (API_ASSEMBLY_SPEC §4.1.1): the complete HTTP surface — every route,
+/// manifest, and OpenAPI document of this owner — as one installable module.
+///
+/// The service host is bootstrapped from the process environment, which is the
+/// standalone profile; platform gateways use [`web_module_with_pool`] instead.
+pub async fn web_module() -> Result<WebModule, String> {
+    let host = Arc::new(PortalServiceHost::from_env().await?);
+    let readiness_check = portal_readiness_check(&host)?;
+    web_module_with_context(ApiAssemblyContext {
+        host,
+        domain_context_injectors: Vec::new(),
+        readiness_check,
+    })
+    .await
+}
+
+fn portal_readiness_check(host: &PortalServiceHost) -> Result<Arc<dyn ReadinessCheck>, String> {
+    let readiness_pool = host
+        .database_pool()
+        .as_postgres()
+        .ok_or_else(|| "Portal requires a PostgreSQL database profile".to_owned())?
+        .clone();
+    Ok(Arc::new(PgPoolReadinessCheck::new(readiness_pool)))
+}
+
+/// Same as [`web_module`] but composed on a process-shared database pool
+/// (platform gateways, API_ASSEMBLY_SPEC §4.1.1).
+pub async fn web_module_with_pool(pool: DatabasePool) -> Result<WebModule, String> {
+    Ok(WebModule::from_contribution(assemble_api_router_with_pool(pool).await?))
+}
