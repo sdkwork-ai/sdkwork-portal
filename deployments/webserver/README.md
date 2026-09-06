@@ -35,10 +35,11 @@ effective(<profile>.<environment>) =
 
 | Environment | File | Hosts | Example | Listeners |
 | --- | --- | ---: | --- | --- |
-| development | `server.development.toml` | 14 | `portal-dev.sdkwork.com` | 80 |
-| test | `server.test.toml` | 14 | `portal-test.sdkwork.com` | 80 |
-| staging | `server.staging.toml` | 14 | `portal-staging.sdkwork.com` | 80 |
-| production | `server.production.toml` | 14 | `portal.sdkwork.com` | 443 ssl + 80 |
+| development | `server.development.toml` | 16 | `portal-dev.sdkwork.com` | 80 |
+| test | `server.test.toml` | 16 | `portal-test.sdkwork.com` | 80 |
+| staging | `server.staging.toml` | 16 | `portal-staging.sdkwork.com` | 80 |
+| demo | `server.demo.toml` | 14 | `portal-demo.sdkwork.com` | 80 |
+| production | `server.production.toml` | 16 | `portal.sdkwork.com` | 443 ssl + 80 |
 
 Surfaces: application.public-ingress.
 
