@@ -5,5 +5,9 @@ environment = "staging"
 [[http.server]]
 listen = ["80"]
 serverName = ["portal-staging.sdkwork.com", "portal-staging.birdcoder.com", "portal-staging.dtupay.com", "portal-staging.noaper.com", "portal-staging.sdkwork.cn", "portal-staging.birdcoder.cn", "portal-staging.dtupay.cn", "portal-staging.noaper.cn", "portal-staging.skubc.com", "portal-staging.skubc.cn", "portal-staging.zowalk.com", "portal-staging.zowalk.cn", "portal-staging.offer86.com", "portal-staging.offer86.cn", "portal-staging.86offer.com", "portal-staging.86offer.cn"]
-include = ["snippets/gateway-locations.nonproduction.conf"]
+include = ["snippets/adaptive-web.named-locations.conf", "snippets/gateway-api-locations.nonproduction.conf"]
+
+[[http.server.location]]
+match = "/"
+include = ["snippets/adaptive-web.dispatch.conf"]
 
