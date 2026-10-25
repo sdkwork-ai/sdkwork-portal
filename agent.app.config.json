@@ -1,18 +1,18 @@
 {
   "schemaVersion": 3,
-  "kind": "sdkwork.app",
+  "kind": "agent.app",
   "app": {
-    "key": "sdkwork-portal-pc",
-    "name": "SDKWork Portal PC",
-    "displayName": "SDKWork Portal PC",
-    "description": "PC browser and desktop shell for the SDKWork platform portal.",
+    "key": "sdkwork-portal",
+    "name": "SDKWork Portal",
+    "displayName": "SDKWork Portal",
+    "description": "Unified SDKWork PC portal shell, user preferences, and operator console.",
     "vendor": "SDKWork",
     "officialWebsiteUrl": "https://sdkwork.com/apps/sdkwork-portal",
     "appType": "APP_REACT",
     "versionSource": "package.json",
     "identifiers": {
       "desktopAppId": "com.sdkwork.portal.pc.desktop",
-      "containerImage": "registry.sdkwork.com/apps/sdkwork-portal-pc"
+      "containerImage": "registry.sdkwork.com/apps/sdkwork-portal"
     }
   },
   "backend": {
@@ -22,7 +22,13 @@
     "platform": "WEB",
     "appId": "sdkwork-portal-pc",
     "tenantId": "100001",
-    "organizationId": "0"
+    "organizationId": "0",
+    "accessTokenPermissionScope": [
+      "iam.users.read",
+      "iam.organizations.read",
+      "iam.roles.read",
+      "iam.permissions.read"
+    ]
   },
   "runtime": {
     "family": "web",
@@ -43,10 +49,10 @@
   "media": {
     "icons": {
       "primary": {
-        "id": "sdkwork-portal-pc-primary-icon",
+        "id": "sdkwork-portal-primary-icon",
         "type": "ICON",
         "purpose": "PRIMARY",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal-pc/assets/icon-1024.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal/assets/icon-1024.png",
         "platform": "APP",
         "locale": "en-US",
         "width": 1024,
@@ -67,10 +73,10 @@
     },
     "screenshots": [
       {
-        "id": "sdkwork-portal-pc-web-screenshot",
+        "id": "sdkwork-portal-web-screenshot",
         "type": "SCREENSHOT",
         "purpose": "CATALOG_SCREENSHOT",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal-pc/media/web-screenshot.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal/media/web-screenshot.png",
         "platform": "WEB",
         "locale": "en-US",
         "deviceClass": "BROWSER",
@@ -80,21 +86,21 @@
         "format": "PNG",
         "fileSizeBytes": 1048576,
         "alphaChannel": false,
-        "caption": "SDKWork Portal PC product screenshot.",
+        "caption": "SDKWork Portal product screenshot.",
         "sortOrder": 0,
         "enabled": true,
         "metadata": {
           "generatedPlaceholder": true,
-          "altText": "SDKWork Portal PC app screenshot."
+          "altText": "SDKWork Portal app screenshot."
         }
       }
     ],
     "previews": [
       {
-        "id": "sdkwork-portal-pc-catalog-preview",
+        "id": "sdkwork-portal-catalog-preview",
         "type": "PREVIEW_IMAGE",
         "purpose": "CATALOG_PREVIEW",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal-pc/media/preview-cover.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-portal/media/preview-cover.png",
         "platform": "WEB",
         "locale": "en-US",
         "width": 1600,
@@ -102,12 +108,12 @@
         "format": "PNG",
         "fileSizeBytes": 786432,
         "alphaChannel": false,
-        "caption": "SDKWork Portal PC preview.",
+        "caption": "SDKWork Portal preview.",
         "sortOrder": 0,
         "enabled": true,
         "metadata": {
           "generatedPlaceholder": true,
-          "altText": "SDKWork Portal PC preview cover."
+          "altText": "SDKWork Portal preview cover."
         }
       }
     ],
@@ -133,33 +139,25 @@
       "name": "sdkwork-skills-app"
     },
     "stores": [],
-    "storeUrl": "https://sdkwork.com/apps/sdkwork-portal-pc"
-  },
-  "environments": {
-    "development": {
-      "runtimeProfile": "standalone.development"
-    },
-    "production": {
-      "runtimeProfile": "cloud.production"
-    }
+    "storeUrl": "https://sdkwork.com/apps/sdkwork-portal"
   },
   "artifacts": {
     "installConfig": {
       "defaultPackageId": "linux-x64-standalone-server-tar-gz",
-      "installCommand": "sdkwork install sdkwork-portal-pc",
-      "launchCommand": "sdkwork open sdkwork-portal-pc",
-      "uninstallCommand": "sdkwork uninstall sdkwork-portal-pc",
+      "installCommand": "sdkwork install sdkwork-portal",
+      "launchCommand": "sdkwork open sdkwork-portal",
+      "uninstallCommand": "sdkwork uninstall sdkwork-portal",
       "packages": [
         {
           "id": "linux-x64-standalone-server-tar-gz",
-          "name": "Sdkwork Portal Pc standalone server archive",
+          "name": "Sdkwork Portal standalone server archive",
           "sourceType": "BINARY_URL",
           "packageFormat": "TAR_GZ",
           "platform": "API",
-          "url": "https://cdn.sdkwork.com/apps/sdkwork-portal-pc/STABLE/0.1.0/linux-x64-standalone-server-tar-gz-0.1.0.tar.gz",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-portal/STABLE/0.1.0/linux-x64-standalone-server-tar-gz-0.1.0.tar.gz",
           "architecture": "x64",
           "checksumAlgorithm": "SHA-256",
-          "checksum": "861a8296be840e333fc025f05a48145196ffe3ac88984fe3175bf740c05f2d5f",
+          "checksum": "e3e096e7a9ede9ab34606db6fb892a6c270289571b397c23cba22c3618ee1304",
           "deploymentProfile": "standalone",
           "runtimeTarget": "server",
           "profileBinding": "fixed",
@@ -170,14 +168,14 @@
         },
         {
           "id": "linux-x64-cloud-server-tar-gz",
-          "name": "Sdkwork Portal Pc cloud server archive",
+          "name": "Sdkwork Portal cloud server archive",
           "sourceType": "BINARY_URL",
           "packageFormat": "TAR_GZ",
           "platform": "API",
-          "url": "https://cdn.sdkwork.com/apps/sdkwork-portal-pc/STABLE/0.1.0/linux-x64-cloud-server-tar-gz-0.1.0.tar.gz",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-portal/STABLE/0.1.0/linux-x64-cloud-server-tar-gz-0.1.0.tar.gz",
           "architecture": "x64",
           "checksumAlgorithm": "SHA-256",
-          "checksum": "0ace72fb456460a0cde8c4bd5e161dd87d94baa3d20bc65132115b202868e5bd",
+          "checksum": "34b27ccf087de4398c3e94e899d79436c86a277f59448c513d4e2def53c9e283",
           "deploymentProfile": "cloud",
           "runtimeTarget": "server",
           "profileBinding": "fixed",
@@ -201,9 +199,9 @@
       {
         "version": "0.1.0",
         "releaseChannel": "STABLE",
-        "title": "SDKWork Portal PC 0.1.0",
-        "summary": "SDKWork Portal PC initialized standard release.",
-        "content": "Initial SDKWork App Standard v3 manifest for SDKWork Portal PC.",
+        "title": "SDKWork Portal 0.1.0",
+        "summary": "SDKWork Portal initialized standard release.",
+        "content": "Initial SDKWork App Standard v3 manifest for SDKWork Portal.",
         "highlights": [
           "SDKWork App Standard v3 configuration initialized",
           "platform_app projection metadata standardized",
@@ -233,6 +231,7 @@
   },
   "metadata": {
     "standardOwner": "sdkwork-specs",
-    "initializedAt": "2026-06-21T00:00:00.000Z"
+    "initializedAt": "2026-06-21T00:00:00.000Z",
+    "deploymentConfig": "etc/sdkwork.deployment.config.json"
   }
 }

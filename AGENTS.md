@@ -22,12 +22,12 @@ Do not copy root standard text into this repository. If these relative paths do 
 
 ## Application Identity
 
-Read `apps/sdkwork-portal-pc/sdkwork.app.config.json` when changing portal application behavior, runtime config, SDK wiring, release metadata, or owned capabilities.
+Read `apps/sdkwork-portal-pc/agent.app.config.json` when changing portal application behavior, runtime config, SDK wiring, release metadata, or owned capabilities.
 
 ## Local Dictionary Structure
 
 - `AGENTS.md`: repository agent entrypoint and relative SDKWork spec index.
-- `sdkwork.app.config.json`: not at repo root; PC app manifest lives under `apps/sdkwork-portal-pc/`.
+- `agent.app.config.json`: not at repo root; PC app manifest lives under `apps/sdkwork-portal-pc/`.
 - `.sdkwork/`: local skills, plugins, manifests, and AI workspace metadata.
 - `specs/`: local application/component contracts and narrowing rules.
 - `apis/`: authored API contracts for platform portal capability.
