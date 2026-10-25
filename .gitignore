@@ -45,3 +45,17 @@ Thumbs.db
 
 # Runtime-generated env config (not tracked)
 **/public/runtime-env.json
+
+# ---- auto-audited: local artifacts that must never be committed ----
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+.turbo/
+.next/
