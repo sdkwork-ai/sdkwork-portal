@@ -121,6 +121,12 @@
         "shell": "pwsh",
         "run": "$ErrorActionPreference = \"Stop\"\nswitch ($env:SDKWORK_PACKAGE_VARIANT) {\n  'config-bundle' { pnpm gateway:validate:cloud }\n  default { Write-Host \"Skipping Portal package validation for profile $($env:SDKWORK_PACKAGE_VARIANT)\" }\n}"
       }
+    ],
+    "sbom": [
+      {
+        "name": "Generate SPDX SBOM",
+        "run": "syft dir:. -o spdx-json=dist/sbom.spdx.json"
+      }
     ]
   },
   "targets": [
@@ -165,5 +171,13 @@
     "workflowArtifact": true,
     "githubRelease": false,
     "retentionDays": 30
+  },
+  "ci": {
+    "setup": [
+      {
+        "name": "Install SBOM generator (syft)",
+        "run": "curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin"
+      }
+    ]
   }
 }
